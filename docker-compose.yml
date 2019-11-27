@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   mycat:
     build: .
@@ -14,5 +14,5 @@ services:
     ulimits:
       nproc: 65535
     hostname: mycat
-    mem_limit: 512m
+#    mem_limit: 1024m
     restart: always
