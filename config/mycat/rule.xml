@@ -41,12 +41,20 @@
 			<algorithm>mod-long</algorithm>
 		</rule>
 	</tableRule>
+
 	<tableRule name="sharding-by-murmur">
 		<rule>
 			<columns>id</columns>
 			<algorithm>murmur</algorithm>
 		</rule>
 	</tableRule>
+	<tableRule name="sharding-by-murmur-u_mid">
+		<rule>
+			<columns>u_mid</columns>
+			<algorithm>murmur</algorithm>
+		</rule>
+	</tableRule>
+
 	<tableRule name="crc32slot">
 		<rule>
 			<columns>id</columns>

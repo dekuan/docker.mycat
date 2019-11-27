@@ -2,14 +2,25 @@
 <!DOCTYPE mycat:schema SYSTEM "schema.dtd">
 <mycat:schema xmlns:mycat="http://io.mycat/">
 
-	<schema name="masterdb" checkSQLschema="false" sqlMaxLimit="100" dataNode="masterDN" />
-	<dataNode name="masterDN" dataHost="masterDH" database="masterdb" />
-	<dataHost name="masterDH" maxCon="1000" minCon="10" balance="1"
+	<schema name="druid" dataNode="dataNode1" checkSQLschema="true" sqlMaxLimit="100">
+		<table name="boards" dataNode="dataNode1,dataNode2" rule="sharding-by-murmur-u_mid"/>
+	</schema>
+
+	<dataNode name="dataNode1" dataHost="dataHost1" database="druid1" />
+	<dataNode name="dataNode2" dataHost="dataHost2" database="druid2" />
+
+	<dataHost name="dataHost1" maxCon="2000" minCon="10" balance="1"
 			  writeType="0" dbType="mysql" dbDriver="native" switchType="-1" slaveThreshold="100">
 		<heartbeat>select user()</heartbeat>
-		<writeHost host="m1" url="172.18.0.2:3306" user="root" password="m1test">
-			<readHost host="s1" url="172.18.0.3:3306" user="root" password="s1test" />
-			<readHost host="s2" url="172.18.0.4:3306" user="root" password="s2test" />
+		<writeHost host="192.168.1.104" url="192.168.1.104:3306" user="druid1" password="druid1">
+			<!--			<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
+		</writeHost>
+	</dataHost>
+	<dataHost name="dataHost2" maxCon="2000" minCon="10" balance="1"
+			  writeType="0" dbType="mysql" dbDriver="native" switchType="-1" slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<writeHost host="192.168.1.104" url="192.168.1.104:3306" user="druid2" password="druid2">
+			<!--			<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
 		</writeHost>
 	</dataHost>
 
