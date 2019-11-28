@@ -31,20 +31,20 @@
 
 
 下载源码 Docker 制作源码、修改后的 Mycat 1.6.5 jar 包、Mycat 配置文件
-~~~
+~~~ bash
 $ git clone https://github.com/dekuan/docker.mycat.git
 ~~~
 <br />
 
 编译/创建 Mycat Docker
-~~~
+~~~ bash
 $ cd docker.mycat
 $ docker-compose build
 ~~~
 <br />
 
 启动 Mycat Docker
-~~~
+~~~ bash
 $ docker-compose up
 ~~~
 
@@ -60,8 +60,7 @@ $ docker-compose up
 
 > 打开配置文件 config/mycat/server.xml
 
-~~~
-
+~~~ bash
 $ vim config/mycat/server.xml
 ~~~
 
@@ -96,8 +95,7 @@ $ vim config/mycat/server.xml
 
 > 打开配置文件 config/mycat/schema.xml
 
-~~~
-
+~~~ bash
 $ vim config/mycat/schema.xml
 ~~~
 
