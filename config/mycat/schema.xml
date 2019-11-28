@@ -3,25 +3,32 @@
 <mycat:schema xmlns:mycat="http://io.mycat/">
 
 	<schema name="druid" dataNode="dataNode1" checkSQLschema="true" sqlMaxLimit="100">
-		<!--<table name="boards" dataNode="dataNode1" rule="sharding-by-murmur-u_mid"/>-->
+		<!--subTables="boards_$0-127"-->
+		<table name="boards" dataNode="dataNode1,dataNode2" rule="sharding-by-murmur"/>
 	</schema>
 
 	<dataNode name="dataNode1" dataHost="dataHost1" database="druid1" />
-	<!--<dataNode name="dataNode2" dataHost="dataHost2" database="druid2" />-->
+	<dataNode name="dataNode2" dataHost="dataHost2" database="druid2" />
 
-	<dataHost name="dataHost1" maxCon="100" minCon="1" balance="0"
+	<dataHost name="dataHost1" maxCon="1000" minCon="10" balance="0"
 			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="-1" slaveThreshold="100">
 		<heartbeat>select user()</heartbeat>
-		<writeHost host="192.168.1.104" url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8" user="druid1" password="druid1">
+		<writeHost
+				host="192.168.1.104"
+				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8"
+				user="druid1" password="druid1">
+						<!--<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
+		</writeHost>
+	</dataHost>
+	<dataHost name="dataHost2" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="1" slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<writeHost
+				host="192.168.1.104"
+				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC"
+				user="druid2" password="druid2">
 			<!--			<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
 		</writeHost>
 	</dataHost>
-	<!--<dataHost name="dataHost2" maxCon="1000" minCon="1" balance="0"-->
-			  <!--writeType="0" dbType="mysql" dbDriver="jdbc" switchType="1" slaveThreshold="100">-->
-		<!--<heartbeat>select user()</heartbeat>-->
-		<!--<writeHost host="192.168.1.104" url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC" user="druid2" password="druid2">-->
-			<!--&lt;!&ndash;			<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />&ndash;&gt;-->
-		<!--</writeHost>-->
-	<!--</dataHost>-->
 
 </mycat:schema>
