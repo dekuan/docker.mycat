@@ -30,20 +30,20 @@
 ### 使用方法
 
 
-下载源码
+下载源码 Docker 制作源码、修改后的 Mycat 1.6.5 jar 包、Mycat 配置文件
 ~~~
 $ git clone https://github.com/dekuan/docker.mycat.git
 ~~~
 <br />
 
-编译/创建 Docker
+编译/创建 Mycat Docker
 ~~~
 $ cd docker.mycat
 $ docker-compose build
 ~~~
 <br />
 
-启动 Docker
+启动 Mycat Docker
 ~~~
 $ docker-compose up
 ~~~
