@@ -4,30 +4,95 @@
 
 	<schema name="druid" dataNode="dataNode1" checkSQLschema="true" sqlMaxLimit="100">
 		<!--subTables="boards_$0-127"-->
-		<table name="boards" dataNode="dataNode1,dataNode2" rule="sharding-by-murmur"/>
+		<table
+				name="boards"
+				dataNode="dataNode1,dataNode2,dataNode3,dataNode4,dataNode5,dataNode6"
+				rule="sharding-by-murmur"/>
 	</schema>
 
-	<dataNode name="dataNode1" dataHost="dataHost1" database="druid1" />
-	<dataNode name="dataNode2" dataHost="dataHost2" database="druid2" />
+	<dataNode name="dataNode1" dataHost="dataHost1" database="druid_1" />
+	<dataNode name="dataNode2" dataHost="dataHost2" database="druid_2" />
+	<dataNode name="dataNode3" dataHost="dataHost3" database="druid_3" />
+	<dataNode name="dataNode4" dataHost="dataHost4" database="druid_4" />
+	<dataNode name="dataNode5" dataHost="dataHost5" database="druid_5" />
+	<dataNode name="dataNode6" dataHost="dataHost6" database="druid_6" />
 
+	<!--
+	balance
+		0, 不开启读写分离机制，所有读操作都发送到当前可用的writeHost上。
+		1，全部的readHost与stand by writeHost参与select语句的负载均衡，简单的说，当双主双从模式(M1->S1，M2->S2，并且M1与M2互为主备)，正常情况下，M2,S1,S2都参与select语句的负载均衡。
+		2，所有读操作都随机的在writeHost、readhost上分发。
+		3，所有读请求随机的分发到wiriterHost对应的readhost执行，writerHost不负担读压力
+
+	writeType 表示写模式
+		0，所有的操作发送到配置的第一个writehost
+		1，随机发送到配置的所有writehost
+		2，不执行写操作
+
+	switchType 指的是切换的模式，目前的取值也有4种：
+		-1，表示不自动切换
+		 1，默认值，表示自动切换
+		 2，基于MySQL主从同步的状态决定是否切换,心跳语句为show slave status
+		 3，基于MySQL galary cluster的切换机制（适合集群）（1.4.1），心跳语句为show status like ‘wsrep%‘。
+	-->
 	<dataHost name="dataHost1" maxCon="1000" minCon="10" balance="0"
 			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="-1" slaveThreshold="100">
 		<heartbeat>select user()</heartbeat>
 		<writeHost
 				host="192.168.1.104"
 				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8"
-				user="druid1" password="druid1">
-						<!--<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
+				user="druid_1" password="druid_1">
+			<!--<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
 		</writeHost>
 	</dataHost>
 	<dataHost name="dataHost2" maxCon="1000" minCon="10" balance="0"
-			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="1" slaveThreshold="100">
+			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="-1" slaveThreshold="100">
 		<heartbeat>select user()</heartbeat>
 		<writeHost
 				host="192.168.1.104"
-				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC"
-				user="druid2" password="druid2">
-			<!--			<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
+				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8"
+				user="druid_2" password="druid_2">
+			<!--<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
+		</writeHost>
+	</dataHost>
+	<dataHost name="dataHost3" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="-1" slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<writeHost
+				host="192.168.1.104"
+				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8"
+				user="druid_3" password="druid_3">
+			<!--<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
+		</writeHost>
+	</dataHost>
+	<dataHost name="dataHost4" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="-1" slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<writeHost
+				host="192.168.1.104"
+				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8"
+				user="druid_4" password="druid_4">
+			<!--<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
+		</writeHost>
+	</dataHost>
+	<dataHost name="dataHost5" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="-1" slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<writeHost
+				host="192.168.1.104"
+				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8"
+				user="druid_5" password="druid_5">
+			<!--<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
+		</writeHost>
+	</dataHost>
+	<dataHost name="dataHost6" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="-1" slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<writeHost
+				host="192.168.1.104"
+				url="jdbc:mysql://192.168.1.104:3306?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8"
+				user="druid_6" password="druid_6">
+			<!--<readHost host="192.168.1.104" url="192.168.1.104:3306" user="druid" password="druid" />-->
 		</writeHost>
 	</dataHost>
 
