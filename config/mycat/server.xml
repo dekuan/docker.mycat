@@ -86,9 +86,15 @@
        </blacklist>
     </firewall>-->
 
+    <!-- Mycat 数据库用户名 -->
     <user name="druid">
+        <!-- Mycat 数据库密码 -->
         <property name="password">druid</property>
+
+        <!-- Mycat 数据库名 -->
         <property name="schemas">druid</property>
+
+        <!-- 是否使用加密的密码，0 表示不使用加密的密码 -->
         <property name="usingDecrypt">0</property>
 
         <!-- 表级 DML 权限设置 -->
