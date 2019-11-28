@@ -87,7 +87,7 @@
     </firewall>-->
 
     <user name="druid">
-        <property name="password">my_password</property>
+        <property name="password">druid</property>
         <property name="schemas">druid</property>
         <property name="usingDecrypt">0</property>
 
