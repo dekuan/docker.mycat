@@ -29,17 +29,26 @@
 
 ### 使用方法
 
-使用方法非常简单
 
+下载源码
 ~~~
-
-
 $ git clone https://github.com/dekuan/docker.mycat.git
+~~~
+<br />
+
+编译/创建 Docker
+~~~
 $ cd docker.mycat
 $ docker-compose build
-$ docker-compose up
-
 ~~~
+<br />
+
+启动 Docker
+~~~
+$ docker-compose up
+~~~
+
+
 
 <br />
 <br />
@@ -47,7 +56,7 @@ $ docker-compose up
 
 ### 配置方法
 
-##### Mycat 用户名和密码配置
+##### 1，Mycat 用户名和密码配置
 
 > 打开配置文件 config/mycat/server.xml
 
@@ -83,13 +92,13 @@ $ vim config/mycat/server.xml
 <br />
 
 
-##### Mycat 数据节点、数据库、分库分表配置
+##### 2，Mycat 数据节点、数据库、分库分表配置
 
 > 打开配置文件 config/mycat/schema.xml
 
 ~~~
 
-$ vim config/mycat/server.xml
+$ vim config/mycat/schema.xml
 ~~~
 
 详细配置建议参考官方配置说明
